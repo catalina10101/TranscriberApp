@@ -14,7 +14,9 @@ namespace TranscriberApp
             _modelPath = modelPath;
         }
 
-        public async Task<string> TranscribeAudioAsync(string mp3Path, IProgress<string>? progress = null)
+        public async Task<string> TranscribeAudioAsync(string mp3Path,
+            IProgress<string>? progress = null,
+            CancellationToken cancellationToken = default)
         {
             // 1. Convert MP3 to the expected 16kHz mono WAV stream
             using var wavStream = AudioConverter.ConvertMp3To16KhzMonoWav(mp3Path);
@@ -31,9 +33,11 @@ namespace TranscriberApp
             var fullTranscript = new StringBuilder();
 
             // 4. Stream segments as they are decoded
-            await foreach (var segment in processor.ProcessAsync(wavStream))
+            await foreach (var segment in processor.ProcessAsync(wavStream, cancellationToken))
             {
-                string line = $"[{segment.Start:hh\\:mm\\:ss} -> {segment.End:hh\\:mm\\:ss}] {segment.Text}";
+                cancellationToken.ThrowIfCancellationRequested();
+                //string line = $"[{segment.Start:hh\\:mm\\:ss} -> {segment.End:hh\\:mm\\:ss}] {segment.Text}";
+                string line = segment.Text.TrimStart();
                 progress?.Report(line);
                 fullTranscript.AppendLine(segment.Text);
             }

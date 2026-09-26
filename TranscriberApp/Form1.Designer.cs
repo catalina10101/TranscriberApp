@@ -30,6 +30,7 @@
         {
             btnTranscribe = new Button();
             txtResults = new TextBox();
+            btnSaveToFile = new Button();
             SuspendLayout();
             // 
             // btnTranscribe
@@ -40,7 +41,7 @@
             btnTranscribe.TabIndex = 0;
             btnTranscribe.Text = "Select Audio to Transcribe";
             btnTranscribe.UseVisualStyleBackColor = true;
-            btnTranscribe.Click += button1_Click;
+            btnTranscribe.Click += btnTranscribe_Click;
             // 
             // txtResults
             // 
@@ -52,11 +53,22 @@
             txtResults.TabIndex = 1;
             txtResults.TextChanged += txtResults_TextChanged;
             // 
+            // btnSaveToFile
+            // 
+            btnSaveToFile.Location = new Point(38, 437);
+            btnSaveToFile.Name = "btnSaveToFile";
+            btnSaveToFile.Size = new Size(75, 23);
+            btnSaveToFile.TabIndex = 2;
+            btnSaveToFile.Text = "Save to File";
+            btnSaveToFile.UseVisualStyleBackColor = true;
+            btnSaveToFile.Click += btnSaveToFile_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 483);
+            Controls.Add(btnSaveToFile);
             Controls.Add(txtResults);
             Controls.Add(btnTranscribe);
             Name = "Form1";
@@ -69,5 +81,6 @@
 
         private Button btnTranscribe;
         private TextBox txtResults;
+        private Button btnSaveToFile;
     }
 }
